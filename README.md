@@ -1,13 +1,13 @@
 # Boggle 1 Basic Board Generation
 
-##Learning Competencies
+## Learning Competencies
 
 * Model a simple real-world system in Ruby code
 * Method definition, arguments, and return values
 * Implement common string methods
 * Internal representation vs. display representation
 
-##Summary
+## Summary
 
 We're going to create a basic Boggle board generator. Read about [Boggle on Wikipedia](http://en.wikipedia.org/wiki/Boggle) if you're not familiar with the game.
 
@@ -18,9 +18,9 @@ First, we're only going to model the first part of boggle, where you place the B
 We're going to do it in two steps. First, we'll to build a dumb version which doesn't care at all about whether it's likely that the Boggle board will have English words. Second, we'll build a version that models the dice.
 
 
-##Releases
+## Releases
 
-###Release 0 : Simple Boggle Board
+### Release 0 : Simple Boggle Board
 
 Our `BoggleBoard` class has one core instance method: `shake()`
 
@@ -59,7 +59,7 @@ We want to write code that does the following:
    MHCU
   ```
 
-###Release 1 : Smart(er) Boggle Board
+### Release 1 : Smart(er) Boggle Board
 
 We need to model the dice, now. Think carefully about how shaking a Boggle board works. Each die lands in one and only one cell, with one side facing up.
 
@@ -86,7 +86,7 @@ HLNNRZ
 DEILRX
 ```
 
-###Release 2 : Dealing with Q
+### Release 2 : Dealing with Q
 
 Assuming we want "Qu" to be printed rather than "Q", how could we make that happen?
 
@@ -104,7 +104,7 @@ L  Qu C  F
 ```
 
 
-##Optimize Your Learning
+## Optimize Your Learning
 
 As you're coding, ask yourself:
   * Do I have a clear understanding of how this procedure works?
@@ -112,7 +112,7 @@ As you're coding, ask yourself:
   * Am I stuck because my understanding of how Boggle works is too fuzzy or mistaken?
 
 
-##Resources
+## Resources
 
 * [Boggle on Wikipedia](http://en.wikipedia.org/wiki/Boggle)
 * [Play Boggle online](http://www.wordplays.com/boggle)
