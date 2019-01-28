@@ -1,38 +1,23 @@
-# Boggle 1 Basic Board Generation
+# Boggle: Генерация игрового поля
 
-## Learning Competencies
+## Введение
 
-* Model a simple real-world system in Ruby code
-* Method definition, arguments, and return values
-* Implement common string methods
-* Internal representation vs. display representation
 
-## Summary
+Почитайте про игру [Boggle](http://en.wikipedia.org/wiki/Boggle). Вам нужно реализовать ее на JS. 
+Сначала смоделируйте первую часть игры - генерацию игры. Кубики складываются в коробку, коробку встряхивают, в результате чего образуется игровое поле. Представьте табличку 4x4 и кнопку рядом с ней. По нажатии на эту кнопку, поле заполняется буквами. После чего можно играть в Boggle. Примерно это и нужно реализовать.
 
-We're going to create a basic Boggle board generator. Read about [Boggle on Wikipedia](http://en.wikipedia.org/wiki/Boggle) if you're not familiar with the game.
-
-Boggle is a simple game, but when you get down into it there are some subtleties.
-
-First, we're only going to model the first part of boggle, where you place the Boggle dice and shake them around to create the initial board. To imagine what that might look like, visualize a blank 4x4 grid with a button next to it. When you push the button a letter appears in each of the 16 cells and you can begin playing Boggle.
-
-We're going to do it in two steps. First, we'll to build a dumb version which doesn't care at all about whether it's likely that the Boggle board will have English words. Second, we'll build a version that models the dice.
-
+Реализуем 2 версии. Первая будет упрощенной, вторая реалистичной.
 
 ## Releases
 
-### Release 0 : Simple Boggle Board
+### Release 0 : Простая версия Boggle
 
-Our `BoggleBoard` class has one core instance method: `shake()`
+Создайте метод `shake()`. Он будет отвечать за перемешивание кубиков в коробке. `shake()` должен модифицировать игровое поле, заполнять случайными буквами в диапазоне `A-Z`.
+И не будем пока вносить другие ограничения. Буквы могут повторяться. Просто ставьте в каждую клетку случайную букву. Так же, если вы читали правила игры, то знаете, что `Q` в игре всегда выступает и в качестве `Qu`. Но не сейчас. Пусть `Q` будет просто `Q` в данном релизе.
 
-For the first step, focus on how you represent the board. `shake()` should modify the board, filling each cell with a random upper-case letter `A-Z`.
+Наше приложение должно делать следующее:
 
-There are no other restrictions on the letters. They can appear multiple times, for example. Just pick a random letter and don't sweat it.
-
-I also know you're worrying about how "Q" is always "Qu" in Boggle. Stop! Just let it be "Q" for now.
-
-We want to write code that does the following:
-
-* When the board is created it should look something like this when I print it:
+* Когда поле создается, оно должно выглядеть следующим образом (если сделать `console.log(board)`):
 
   ```JavaScript
    ____
@@ -41,7 +26,7 @@ We want to write code that does the following:
    ____
   ```
 
-* When the board is shaken it should look something like this when I print it:
+* Когда мы встряхнем коробку, то поле будет выглядеть примерно так(если сделать `console.log(board)`): 
 
   ```JavaScript
    DUMV
@@ -50,7 +35,7 @@ We want to write code that does the following:
    ZOHG
   ```
 
-* When the board is shaken again it should look different when I print it:
+* Если встряхнуть коробку еще раз, то поле будет выглядеть иначе. Например:
 
   ```JavaScript
    QIRZ
@@ -59,13 +44,12 @@ We want to write code that does the following:
    MHCU
   ```
 
-### Release 1 : Smart(er) Boggle Board
+### Release 1 : Умная версия Boggle
 
-We need to model the dice, now. Think carefully about how shaking a Boggle board works. Each die lands in one and only one cell, with one side facing up.
+Настало время моделировать кубики. Внимательно разберитесь что происходит с кубиками в настоящей игре во время встряхивания коробки. Каждый кубик оказывается в определенной клетке, одной из своих сторон к игрокам. Вам не нужно тщательно продумывать траектории каждого кубика, чтобы решить задачу. У вас есть исходное поле, и вы должны получить результат, который мог бы получиться в реальной игре. Возможно вам надо будет использовать еще один массив, чтобы хранить все стороны кубика. Либо можете пойти другим путем.
 
-Can you think of a way to model a die landing in only one cell without explicitly keeping track of which dice have landed and which haven't? One way to do this is using a secondary `Array`, can you think of another?
 
-We'll still only have one core method, `BoggleBoard.shake()`. Here's a list of Boggle dice, with "Q" representing "Qu":
+Список некоторых возможных комбинаций, где "Q" представляет собой "Qu":
 
 ```text
 AAEEGN
@@ -86,15 +70,13 @@ HLNNRZ
 DEILRX
 ```
 
-### Release 2 : Dealing with Q
+### Release 2 : Разберемся с `Q`
 
-Assuming we want "Qu" to be printed rather than "Q", how could we make that happen?
+Теперь мы хотим выводить `Qu` вместо `Q`. Как это сделать? Есть много способов. Не забывайте, что то как игровое поле выглядит на самом деле и как оно представляется в программе не всегда одно и то же.
 
-There are several ways of making this happen, especially if you keep in mind that how the board appears to the computer, how it's represented in your program, doesn't have to be how it appears to the person using the program.
+Как реализуете замену `Q`, надо будет адаптировать вывод поля на экран, тк скорее всего ваши кубики будут смещаться из-за `Qu`, а это не очень правильно.
 
-Consider a few ways to make "Qu" print instead of just "Q", deliberate on the tradeoffs for a few minutes, and implement one. You'll probably want to change how the board is printed, too, since "Qu" will throw everything out of alignment.
-
-For example, something like this might be appropriate:
+Например, можете выводить в таком формате:
 
 ```text
 U  N  O  T
@@ -102,14 +84,6 @@ S  E  W  G
 S  V  L  T
 L  Qu C  F
 ```
-
-
-## Optimize Your Learning
-
-As you're coding, ask yourself:
-  * Do I have a clear understanding of how this procedure works?
-  * Am I stuck because I know what I want to do but don't know how to say it in JavaScript?
-  * Am I stuck because my understanding of how Boggle works is too fuzzy or mistaken?
 
 
 ## Resources
