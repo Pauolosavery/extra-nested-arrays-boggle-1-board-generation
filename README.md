@@ -1,29 +1,29 @@
-## Boggle. Генерация игрового поля
+## Boggle. Generating the playing field
 
-Почитай про игру [Boggle](http://en.wikipedia.org/wiki/Boggle). Тебе нужно реализовать ее на JS. 
+Read about the game [Boggle](http://en.wikipedia.org/wiki/Boggle). You need to implement it in JS. 
 
-Сначала смоделируй первую часть игры - генерацию игры. Кубики складываются в коробку, коробку встряхивают, в результате чего образуется игровое поле. Представь табличку 4x4 и кнопку рядом с ней. По нажатии на эту кнопку, поле заполняется буквами. После чего можно играть в Boggle. Примерно это и нужно реализовать.
+Before all, you should model the first part of the game - the generation. The dices are stacked in a box, the box is shaken, resulting in a playing field. Imagine a 4x4 tray and a button next to it. When this button is pressed, the tray is filled with letters. After that, you can play Boggle. This is roughly what we need to implement.
 
-Реализуем 2 версии. Первая будет упрощенной, вторая - реалистичной.
+We are supposed to implement two versions. The first will be simplified, the second - realistic.
 
-### Release 0. Простая версия Boggle
+### Release 0. The simple version of Boggle.
 
-Создай метод `shake()`. Он будет отвечать за перемешивание кубиков в коробке. `shake()` должен модифицировать игровое поле, заполнять случайными буквами в диапазоне `A-Z`.
+Create a method `shake()`. It will be responsible for shaking the dices in the box. The method `shake()` should modify the playing field, fill it with random letters in the range `A-Z`.
 
-Пока других ограничений не будет. Буквы могут повторяться. Просто вставь в каждую клетку случайную букву. Так же, если ты читал(а) правила игры, то знаешь, что `Q` в игре всегда выступает и в качестве `Qu`. Но не сейчас. Пусть `Q` будет просто `Q` в данном релизе.
+There are no other restrictions so far. The letters can be repeated. Just put a random letter in each cell. Also, if you've read the rules of the game, you know that `Q` always acts as `Qu` in the game like this. But not the case is different. Let `Q` be just `Q` in this release.
 
-Наше приложение должно делать следующее:
+Our application should do the following:
 
-* Когда поле создается, оно должно выглядеть следующим образом (если сделать `console.log(board)`):
+* When the field is created, it should look like this (if you do `console.log(board)`):
 
-  ```JavaScript
+  ```JavaScript.
    ____
    ____
    ____
    ____
   ```
 
-* Когда мы встряхнем коробку, то поле будет выглядеть примерно так (если сделать `console.log(board)`): 
+* When we shake the box, the box will look like this (if we do `console.log(board)`): 
 
   ```JavaScript
    DUMV
@@ -32,20 +32,20 @@
    ZOHG
   ```
 
-* Если встряхнуть коробку еще раз, то поле будет выглядеть иначе. Например:
+* If we shake the box again, the field will look different. For example:
 
-  ```JavaScript
+  ```JavaScript.
    QIRZ
    EEBY
    OEJE
    MHCU
   ```
 
-### Release 1. Умная версия Boggle
+### Release 1. The clever version of Boggle.
 
-Настало время моделировать кубики. Внимательно разберись что происходит с кубиками в настоящей игре во время встряхивания коробки. Каждый кубик оказывается в определенной клетке, одной из своих сторон к игрокам. Тебе не нужно тщательно продумывать траектории каждого кубика, чтобы решить задачу. У тебя есть исходное поле, и ты должен(на) получить результат, который мог бы получиться в реальной игре. Возможно тебе надо будет использовать еще один массив, чтобы хранить все стороны кубика. Либо можешь пойти другим путем.
+It's time to simulate the dice. Carefully figure out what happens to the dices in the real game while shaking the box. Each dice turns a particular side up, towards the players. You don't have to consider carefully the trajectory of each dice to solve the problem. You have the original field, and you have to get the result that you would get in a real game. You might need to use another array to store all the sides of the dice. Or you could go another way.
 
-Список некоторых возможных комбинаций, где "Q" представляет собой "Qu":
+A list of some possible combinations where "Q" represents "Qu":
 
 ```text
 AAEEGN
@@ -66,26 +66,26 @@ HLNNRZ
 DEILRX
 ```
 
-### Release 2. Разберемся с `Q`
+### Release 2. Let's deal with ``Q''.
 
-> Буква Q — одна из самых редких букв латинского алфавита, а существование её в словах возможно только благодаря наличию соседней буквы U. Поэтому при игре в Боггл Q считается как QU, а длина составленного слова увеличивается на 1.
+> Q is one of the rarest letters of the Latin alphabet, and its existence in words is only possible due to the presence of the neighbouring letter U. Therefore, when playing Boggle, Q is counted as QU, and the length of the composed word is increased by 1.
 
-> Например: `square` (площадь) можно составить всего из 5 букв: S, Q, A, R, E — хотя длина слова будет оценена в 6 символов.
+> For example: `square` (square) can be composed of only 5 letters: S, Q, A, R, E - although the word length will be evaluated as 6 characters.
 
-Теперь тебе надо выводить `Qu` вместо `Q`. Как это сделать? Есть много способов. Не забывай, что то, как игровое поле выглядит на самом деле и то, как оно представляется в программе - не всегда одно и то же.
+Now you need to output `Qu` instead of `Q`. How do you do that? There are many ways. Don't forget how the playing field looks like in reality and how it is represented in the program. They are not always the same.
 
-Когда реализуешь замену `Q`, надо будет адаптировать вывод поля на экран, так как скорее всего твои кубики будут смещаться из-за `Qu`, а это не очень правильно.
+When you implement the replacement of `Q`, you will have to adjust the output of the field on the screen, because most likely your dice will move because of `Qu`, and this is not very good.
 
-Например, можешь выводить в таком формате:
+For example, you can output in this format:
 
 ```text
-U  N  O  T
-S  E  W  G
-S  V  L  T
-L  Qu C  F
+U N O T
+S E W G
+S V L T
+L Qu C F
 ```
 
-## Дополнительные источники
+## Additional materials
 
 * [Boggle on Wikipedia](http://en.wikipedia.org/wiki/Boggle)
 * [Play Boggle online](http://www.wordplays.com/boggle)
